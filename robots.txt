@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://demaks.by/sitemap.xml
