@@ -230,7 +230,33 @@ function DemaksSite() {
   };
 
   const [formSent, setFormSent] = useState(false);
+  const [formSending, setFormSending] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formNeed, setFormNeed] = useState("Коробки для тортов");
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  const handleSubmit = async () => {
+    setFormError("");
+    if (!formName.trim()) { setFormError("Укажите ваше имя"); return; }
+    if (!formPhone.trim()) { setFormError("Укажите телефон"); return; }
+    setFormSending(true);
+    const text = `📦 Новая заявка с сайта!\n\n👤 Имя: ${formName}\n📞 Телефон: ${formPhone}\n📋 Что нужно: ${formNeed}`;
+    try {
+      const res = await fetch("https://api.telegram.org/bot8236052358:AAEe4EE9Cjde_3fHVcfouE69Hgv9TOOaa0Q/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: "-5260600946", text, parse_mode: "HTML" }),
+      });
+      if (!res.ok) throw new Error("Ошибка отправки");
+      setFormSent(true);
+    } catch (e) {
+      setFormError("Не удалось отправить заявку. Попробуйте ещё раз.");
+    } finally {
+      setFormSending(false);
+    }
+  };
 
 
 
@@ -885,15 +911,15 @@ function DemaksSite() {
                   <>
                     <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 24 }}>Форма заявки</h3>
                     {[
-                      { label: "Ваше имя", placeholder: "Анна", type: "text" },
-                      { label: "Телефон или Telegram", placeholder: "+375 29 123 45 67", type: "tel" },
+                      { label: "Ваше имя", placeholder: "Анна", type: "text", value: formName, onChange: e => setFormName(e.target.value) },
+                      { label: "Телефон или Telegram", placeholder: "+375 29 123 45 67", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
                     ].map((f, i) => (
                       <div key={i} style={{ marginBottom: 16 }}>
                         <label style={{
                           display: "block", fontSize: 13, fontWeight: 600,
                           marginBottom: 6, color: T.text,
                         }}>{f.label}</label>
-                        <input placeholder={f.placeholder} type={f.type} style={{
+                        <input placeholder={f.placeholder} type={f.type} value={f.value} onChange={f.onChange} style={{
                           width: "100%", padding: "12px 16px", borderRadius: T.radiusSm,
                           border: `1px solid ${T.border}`, fontSize: 15,
                           fontFamily: "inherit", outline: "none",
@@ -908,7 +934,7 @@ function DemaksSite() {
                         display: "block", fontSize: 13, fontWeight: 600,
                         marginBottom: 6, color: T.text,
                       }}>Что вам нужно?</label>
-                      <select style={{
+                      <select value={formNeed} onChange={e => setFormNeed(e.target.value)} style={{
                         width: "100%", padding: "12px 16px", borderRadius: T.radiusSm,
                         border: `1px solid ${T.border}`, fontSize: 15,
                         fontFamily: "inherit", background: "white", outline: "none",
@@ -921,15 +947,18 @@ function DemaksSite() {
                         <option>Другое</option>
                       </select>
                     </div>
-                    <button onClick={() => setFormSent(true)} style={{
+                    {formError && (
+                      <div style={{ color: "#e53e3e", fontSize: 14, marginBottom: 12, fontWeight: 600 }}>{formError}</div>
+                    )}
+                    <button onClick={handleSubmit} disabled={formSending} style={{
                       width: "100%", padding: "14px", borderRadius: T.radiusSm,
-                      background: T.blue, color: "white", fontSize: 16, fontWeight: 700,
-                      border: "none", cursor: "pointer", fontFamily: "inherit",
+                      background: formSending ? T.textSoft : T.blue, color: "white", fontSize: 16, fontWeight: 700,
+                      border: "none", cursor: formSending ? "not-allowed" : "pointer", fontFamily: "inherit",
                       transition: "background 0.2s",
                     }}
-                    onMouseEnter={e => e.target.style.background = T.blueDark}
-                    onMouseLeave={e => e.target.style.background = T.blue}>
-                      Отправить заявку
+                    onMouseEnter={e => { if (!formSending) e.target.style.background = T.blueDark }}
+                    onMouseLeave={e => { if (!formSending) e.target.style.background = T.blue }}>
+                      {formSending ? "Отправка..." : "Отправить заявку"}
                     </button>
                   </>
                 ) : (
