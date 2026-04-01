@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Демакс","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":"+375291234567","address":{"@type":"PostalAddress","streetAddress":"ул. Промышленная 12","addressLocality":"Могилёв","addressCountry":"BY"},"geo":{"@type":"GeoCoordinates","latitude":"53.9045","longitude":"30.3449"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":"https://demaks.by/og-image.jpg","sameAs":["https://www.instagram.com/demaks_grupp","https://t.me/demaks_grupp"]}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Демакс","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":"+375447999901","address":{"@type":"PostalAddress","streetAddress":"ул. Промышленная 12","addressLocality":"Могилёв","addressCountry":"BY"},"geo":{"@type":"GeoCoordinates","latitude":"53.9045","longitude":"30.3449"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":"https://demaks.by/og-image.jpg","sameAs":["https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==","https://t.me/demaks_orders_bot"]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какой минимальный заказ коробок?","acceptedAnswer":{"@type":"Answer","text":"Минимальный заказ — от 100 штук. Мы работаем с малыми тиражами для малого бизнеса."}},{"@type":"Question","name":"Какая коробка нужна для торта 26 см?","acceptedAnswer":{"@type":"Answer","text":"Для торта диаметром 24-26 см подойдёт коробка 28×28×14 см из микрогофрокартона. Цена от 2.80 руб. за штуку."}},{"@type":"Question","name":"Сколько времени занимает производство коробок?","acceptedAnswer":{"@type":"Answer","text":"Стандартный срок производства — 3-5 рабочих дней. Доставка по Могилёву и всей Беларуси."}},{"@type":"Question","name":"Из чего сделаны ваши коробки?","acceptedAnswer":{"@type":"Answer","text":"Мы производим коробки из микрогофрокартона — он прочнее обычного картона, выдерживает вес до 5 кг и подходит для пищевых продуктов."}},{"@type":"Question","name":"Вы делаете коробки для мыла и косметики?","acceptedAnswer":{"@type":"Answer","text":"Да, мы производим компактные коробки размерами от 8×8 см для мыла ручной работы, свечей и бомбочек для ванны."}}]}
@@ -130,7 +130,7 @@ const usps = [
 ];
 
 const steps = [
-  { num: "01", title: "Напишите нам", desc: "В Telegram, по телефону или через форму — укажите размер и количество", time: "~5 минут" },
+  { num: "01", title: "Напишите нам", desc: "В Telegram, по телефону или через форму на сайте — укажите размер и количество", time: "~5 минут" },
   { num: "02", title: "Согласуем детали", desc: "Подберём коробку, отправим фото аналога и назовём точную цену", time: "в тот же день" },
   { num: "03", title: "Получите заказ", desc: "Изготовим и доставим по Могилёву и всей Беларуси", time: "3–5 рабочих дней" },
 ];
@@ -425,7 +425,7 @@ function DemaksSite() {
                   }}>
                     Получить каталог с ценами
                   </a>
-                  <a href="https://t.me/demaks_grupp" target="_blank"
+                  <a href="https://t.me/demaks_orders_bot" target="_blank"
                      style={{
                     background: "rgba(255,255,255,0.1)", color: "white",
                     padding: "14px 28px", borderRadius: T.radiusSm, fontSize: 15,
@@ -625,7 +625,7 @@ function DemaksSite() {
                       <span style={{ fontSize: 20, fontWeight: 800, color: T.text }}>
                         {p.price} <span style={{ fontSize: 13, fontWeight: 500, color: T.textMuted }}>руб.</span>
                       </span>
-                      <a href="https://t.me/demaks_grupp" target="_blank" style={{
+                      <a href="https://t.me/demaks_orders_bot" target="_blank" style={{
                         background: T.blue, color: "white", padding: "8px 16px",
                         borderRadius: T.radiusSm, fontSize: 13, fontWeight: 600,
                         textDecoration: "none", transition: "background 0.2s",
@@ -912,7 +912,7 @@ function DemaksSite() {
                     <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 24 }}>Форма заявки</h3>
                     {[
                       { label: "Ваше имя", placeholder: "Анна", type: "text", value: formName, onChange: e => setFormName(e.target.value) },
-                      { label: "Телефон или Telegram", placeholder: "+375 29 123 45 67", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
+                      { label: "Телефон или Telegram", placeholder: "+375 44 799 99 01", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
                     ].map((f, i) => (
                       <div key={i} style={{ marginBottom: 16 }}>
                         <label style={{
@@ -974,7 +974,7 @@ function DemaksSite() {
             <Reveal delay={0.15}>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {/* Telegram CTA */}
-                <a href="https://t.me/demaks_grupp" target="_blank"
+                <a href="https://t.me/demaks_orders_bot" target="_blank"
                   style={{
                     background: "#26A5E4", color: "white", borderRadius: T.radius,
                     padding: 24, textDecoration: "none", display: "flex",
@@ -1001,7 +1001,7 @@ function DemaksSite() {
                   }}>📞</div>
                   <div>
                     <div style={{ fontSize: 13, color: T.textMuted }}>Позвонить</div>
-                    <div style={{ fontSize: 18, fontWeight: 700 }}>+375 (29) 123-45-67</div>
+                    <div style={{ fontSize: 18, fontWeight: 700 }}>Саша: +375 (44) 799-99-01</div>
                   </div>
                 </div>
 
@@ -1038,7 +1038,7 @@ function DemaksSite() {
                 </div>
 
                 {/* Instagram */}
-                <a href="https://www.instagram.com/demaks_grupp" target="_blank" style={{
+                <a href="https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==" target="_blank" style={{
                   background: T.white, borderRadius: T.radius, padding: 24,
                   border: `1px solid ${T.border}`, textDecoration: "none", color: T.text,
                   display: "flex", alignItems: "center", gap: 16,
@@ -1090,7 +1090,7 @@ function DemaksSite() {
 
       {/* ═══════ WHATSAPP FLOAT ═══════ */}
       <a className="wa-float"
-         href="https://t.me/demaks_grupp"
+         href="https://t.me/demaks_orders_bot"
          target="_blank" title="Написать в Telegram">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
