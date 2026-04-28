@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="Коробки из микрогофрокартона от производителя в Могилёве | Демакс">
 <meta name="twitter:description" content="Производство коробок из микрогофрокартона. Упаковка для тортов, косметики и подарков. От 100 шт.">
 <meta name="twitter:image" content="https://demaks.by/photos/web/large/IMG_9710.jpg">
-<link rel="preload" as="image" href="/photos/web/large/IMG_9692.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="/photos/web/large/IMG_9692.webp?v=2" type="image/webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -95,6 +95,7 @@ function Reveal({ children, delay = 0, style = {} }) {
 }
 
 /* ───────── DATA ───────── */
+const PHOTOS_V = "v=2";
 const PHOTOS_M = "/photos/web/medium";
 const PHOTOS_L = "/photos/web/large";
 
@@ -238,9 +239,9 @@ function Photo({ name, size = "medium", alt, style = {}, eager = false, onClick 
   const dir = size === "large" ? PHOTOS_L : PHOTOS_M;
   return (
     <picture>
-      <source srcSet={`${dir}/${name}.webp`} type="image/webp" />
+      <source srcSet={`${dir}/${name}.webp?${PHOTOS_V}`} type="image/webp" />
       <img
-        src={`${dir}/${name}.jpg`}
+        src={`${dir}/${name}.jpg?${PHOTOS_V}`}
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
@@ -1320,8 +1321,8 @@ function DemaksSite() {
         <div className="lightbox" onClick={() => setLightbox(null)}>
           <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); setLightbox(null); }} aria-label="Закрыть">×</button>
           <picture>
-            <source srcSet={`${PHOTOS_L}/${lightbox}.webp`} type="image/webp" />
-            <img src={`${PHOTOS_L}/${lightbox}.jpg`} alt="" />
+            <source srcSet={`${PHOTOS_L}/${lightbox}.webp?${PHOTOS_V}`} type="image/webp" />
+            <img src={`${PHOTOS_L}/${lightbox}.jpg?${PHOTOS_V}`} alt="" />
           </picture>
         </div>
       )}
