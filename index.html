@@ -427,6 +427,8 @@ function DemaksSite() {
         }
         @media (max-width: 1000px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 560px) { .cert-grid { grid-template-columns: 1fr; } }
+        .ff-cutout-row { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 700px) { .ff-cutout-row { grid-template-columns: 1fr; } }
         .contact-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -809,6 +811,30 @@ function DemaksSite() {
               <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8, maxWidth: 600, margin: "8px auto 0" }}>
                 Бурый гофрокартон, без печати. От 50 шт, изготовление 2–3 рабочих дня. {fourFlap.length} готовых размеров.
               </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <div className="ff-cutout-row" style={{
+              background: `linear-gradient(180deg, ${T.kraftBg} 0%, ${T.bgAlt} 100%)`,
+              borderRadius: T.radius, border: `1px solid ${T.border}`,
+              padding: "24px 24px 16px", marginBottom: 24,
+              display: "grid", gap: 12, alignItems: "end",
+            }}>
+              {[
+                { name: "4flap-small",  alt: "4-клапанная коробка Т-23В малого размера" },
+                { name: "4flap-medium", alt: "4-клапанная коробка Т-23В среднего размера" },
+                { name: "4flap-large",  alt: "4-клапанная коробка Т-23В крупного размера" },
+              ].map((c, i) => (
+                <picture key={i}>
+                  <source srcSet={`${PHOTOS_M}/${c.name}.webp?${PHOTOS_V}`} type="image/webp" />
+                  <img src={`${PHOTOS_M}/${c.name}.png?${PHOTOS_V}`} alt={c.alt}
+                    loading="lazy" decoding="async" style={{
+                      width: "100%", height: "auto", display: "block",
+                      objectFit: "contain",
+                    }} />
+                </picture>
+              ))}
             </div>
           </Reveal>
 
