@@ -3,3 +3,7 @@ photos/*.heic
 photos/*.JPG
 photos/*.jpg
 scripts/
+
+docs/*
+!docs/eaes-declaration.pdf
+!docs/beltpp-certificate.pdf

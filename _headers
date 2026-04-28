@@ -27,3 +27,7 @@
 
 /photos/web/*
   Cache-Control: public, max-age=31536000, immutable
+
+/docs/*.pdf
+  Cache-Control: public, max-age=2592000
+  Content-Disposition: inline
