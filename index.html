@@ -15,18 +15,21 @@
 <meta property="og:description" content="Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков. От 100 шт, доставка по Беларуси за 5 дней.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://demaks.by">
-<meta property="og:image" content="https://demaks.by/og-image.jpg">
+<meta property="og:image" content="https://demaks.by/photos/web/large/IMG_9710.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1200">
 <meta property="og:locale" content="ru_BY">
 <meta property="og:site_name" content="Демакс">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Коробки из микрогофрокартона от производителя в Могилёве | Демакс">
 <meta name="twitter:description" content="Производство коробок из микрогофрокартона. Упаковка для тортов, косметики и подарков. От 100 шт.">
-<meta name="twitter:image" content="https://demaks.by/og-image.jpg">
+<meta name="twitter:image" content="https://demaks.by/photos/web/large/IMG_9710.jpg">
+<link rel="preload" as="image" href="/photos/web/large/IMG_9692.webp" type="image/webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"ОДО «Демакс-групп»","legalName":"Общество с дополнительной ответственностью «Демакс-групп»","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":["+375291571517","+375291167700","+375447225614"],"email":"demaks-grupp@mail.ru","address":{"@type":"PostalAddress","streetAddress":"д. Полетники, ул. Центральная, 2А","addressRegion":"Могилёвская обл., Могилёвский р-н","postalCode":"213105","addressCountry":"BY"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":"https://demaks.by/og-image.jpg","sameAs":["https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==","https://t.me/demaks_orders_bot"],"taxID":"790380841"}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"ОДО «Демакс-групп»","legalName":"Общество с дополнительной ответственностью «Демакс-групп»","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":["+375291571517","+375291167700","+375447225614"],"email":"demaks-grupp@mail.ru","address":{"@type":"PostalAddress","streetAddress":"д. Полетники, ул. Центральная, 2А","addressRegion":"Могилёвская обл., Могилёвский р-н","postalCode":"213105","addressCountry":"BY"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":["https://demaks.by/photos/web/large/IMG_9692.jpg","https://demaks.by/photos/web/large/IMG_9710.jpg","https://demaks.by/photos/web/large/IMG_9714.jpg"],"sameAs":["https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==","https://t.me/demaks_orders_bot"],"taxID":"790380841"}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какой минимальный заказ коробок?","acceptedAnswer":{"@type":"Answer","text":"Минимальный заказ — от 100 штук. Мы работаем с малыми тиражами для малого бизнеса."}},{"@type":"Question","name":"Какая коробка нужна для торта 26 см?","acceptedAnswer":{"@type":"Answer","text":"Для торта диаметром 24-26 см подойдёт коробка 28×28×14 см из микрогофрокартона. Цена от 2.80 руб. за штуку."}},{"@type":"Question","name":"Сколько времени занимает производство коробок?","acceptedAnswer":{"@type":"Answer","text":"Стандартный срок производства — 3-5 рабочих дней. Доставка по Могилёву и всей Беларуси."}},{"@type":"Question","name":"Из чего сделаны ваши коробки?","acceptedAnswer":{"@type":"Answer","text":"Мы производим коробки из микрогофрокартона — он прочнее обычного картона, выдерживает вес до 5 кг и подходит для пищевых продуктов."}},{"@type":"Question","name":"Вы делаете коробки для мыла и косметики?","acceptedAnswer":{"@type":"Answer","text":"Да, мы производим компактные коробки размерами от 8×8 см для мыла ручной работы, свечей и бомбочек для ванны."}}]}
@@ -92,34 +95,49 @@ function Reveal({ children, delay = 0, style = {} }) {
 }
 
 /* ───────── DATA ───────── */
+const PHOTOS_M = "/photos/web/medium";
+const PHOTOS_L = "/photos/web/large";
+
 const niches = [
   {
     icon: "🎂", title: "Кондитерам",
     desc: "Коробки для тортов, капкейков, макарон и пряников",
-    img: "linear-gradient(135deg, #FDEBD0 0%, #F5CBA7 100%)",
+    photo: "IMG_9690",
+    gradient: "linear-gradient(135deg, rgba(253,235,208,0.55) 0%, rgba(245,203,167,0.35) 100%)",
     items: ["Для тортов 21×21—35×35", "Для капкейков 2–12 шт", "Для макарон с окном", "Для пряничных домиков"],
   },
   {
     icon: "🧴", title: "Косметике",
     desc: "Компактные коробки для мыла, свечей и бомбочек",
-    img: "linear-gradient(135deg, #D5F5E3 0%, #A9DFBF 100%)",
+    photo: "IMG_9694",
+    gradient: "linear-gradient(135deg, rgba(213,245,227,0.5) 0%, rgba(169,223,191,0.3) 100%)",
     items: ["8×8×4 для мыла", "10×10×6 для свечей", "Наборы 20×15 для косметики", "Коробки с окном"],
   },
   {
     icon: "🎁", title: "Подаркам",
     desc: "Подарочные боксы любого размера, опт от 100 шт",
-    img: "linear-gradient(135deg, #D6E4F0 0%, #A9CCE3 100%)",
+    photo: "IMG_9696",
+    gradient: "linear-gradient(135deg, rgba(214,228,240,0.5) 0%, rgba(169,204,227,0.3) 100%)",
     items: ["Подарочные боксы 25×25×10", "Корпоративные от 200 шт", "С логотипом (наклейка)", "Нестандартные размеры"],
   },
 ];
 
 const catalog = [
-  { name: "Коробка для торта", size: "26×26×12 см", price: "от 2.80", tag: "Хит", color: "#FDEBD0" },
-  { name: "Коробка для капкейков", size: "25×17×10 см (6 шт)", price: "от 2.40", tag: "", color: "#FEF9E7" },
-  { name: "Коробка для макарон", size: "18×11×5 см", price: "от 1.90", tag: "Новинка", color: "#EBF5FB" },
-  { name: "Подарочный бокс", size: "25×25×10 см", price: "от 3.50", tag: "", color: "#F4ECF7" },
-  { name: "Коробка для мыла", size: "10×10×5 см", price: "от 1.20", tag: "", color: "#D5F5E3" },
-  { name: "Коробка с окном", size: "20×20×8 см", price: "от 2.60", tag: "Хит", color: "#FDEBD0" },
+  { name: "Коробка для торта", size: "26×26×12 см", price: "от 2.80", tag: "Хит", photo: "IMG_9690" },
+  { name: "Коробка для капкейков", size: "25×17×10 см (6 шт)", price: "от 2.40", tag: "", photo: "IMG_9687" },
+  { name: "Коробка для макарон", size: "18×11×5 см", price: "от 1.90", tag: "Новинка", photo: "IMG_9676" },
+  { name: "Подарочный бокс", size: "25×25×10 см", price: "от 3.50", tag: "", photo: "IMG_9696" },
+  { name: "Коробка-самосборка", size: "10×10×5 см", price: "от 1.20", tag: "", photo: "IMG_9682" },
+  { name: "Набор коробок", size: "от 8×8 до 25×25 см", price: "от 1.20", tag: "Хит", photo: "IMG_9692" },
+];
+
+const production = [
+  { photo: "IMG_9710", title: "Свой производственный цех", desc: "1200 м² в Полётниках под Могилёвом" },
+  { photo: "IMG_9714", title: "Печатно-высечная линия", desc: "Печать, биговка, высечка за один проход" },
+  { photo: "IMG_9657", title: "Микрогофрокартон", desc: "Гофрированный слой держит до 5 кг" },
+  { photo: "IMG_9674", title: "Высечные штампы", desc: "Точные раскрои под любой размер" },
+  { photo: "IMG_9670", title: "Рилёвочный станок", desc: "Идеальные рёбра жёсткости" },
+  { photo: "IMG_9719", title: "Контроль и отгрузка", desc: "Каждая партия — под плёнкой и на паллете" },
 ];
 
 const usps = [
@@ -216,6 +234,27 @@ function Stars({ count }) {
   );
 }
 
+function Photo({ name, size = "medium", alt, style = {}, eager = false, onClick }) {
+  const dir = size === "large" ? PHOTOS_L : PHOTOS_M;
+  return (
+    <picture>
+      <source srcSet={`${dir}/${name}.webp`} type="image/webp" />
+      <img
+        src={`${dir}/${name}.jpg`}
+        alt={alt}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        fetchpriority={eager ? "high" : "auto"}
+        onClick={onClick}
+        style={{
+          width: "100%", height: "100%", objectFit: "cover",
+          display: "block", ...style,
+        }}
+      />
+    </picture>
+  );
+}
+
 /* ───────── MAIN APP ───────── */
 function DemaksSite() {
   const refs = {
@@ -236,6 +275,18 @@ function DemaksSite() {
   const [formPhone, setFormPhone] = useState("");
   const [formNeed, setFormNeed] = useState("Коробки для тортов");
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [lightbox, setLightbox] = useState(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e) => { if (e.key === "Escape") setLightbox(null); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox]);
 
   const handleSubmit = async () => {
     setFormError("");
@@ -337,6 +388,31 @@ function DemaksSite() {
         }
         .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .prod-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        @media (max-width: 900px) { .prod-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px) { .prod-grid { grid-template-columns: 1fr; } }
+        .prod-card img { transition: transform 0.6s cubic-bezier(.22,1,.36,1); }
+        .prod-card:hover img { transform: scale(1.06); }
+        .lightbox {
+          position: fixed; inset: 0; z-index: 1000;
+          background: rgba(0,0,0,0.92);
+          display: flex; align-items: center; justify-content: center;
+          padding: 24px; cursor: zoom-out;
+          animation: lb-fade 0.2s ease;
+        }
+        .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+        .lightbox-close {
+          position: absolute; top: 20px; right: 24px;
+          width: 44px; height: 44px; border-radius: 50%;
+          background: rgba(255,255,255,0.12); color: white;
+          border: none; cursor: pointer; font-size: 22px; line-height: 1;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+        @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
         .wa-float {
           position: fixed; bottom: 24px; right: 24px; z-index: 90;
           width: 60px; height: 60px; border-radius: 50%;
@@ -457,60 +533,46 @@ function DemaksSite() {
               </Reveal>
             </div>
 
-            {/* Hero visual — abstract packaging composition */}
+            {/* Hero visual — real product photo */}
             <Reveal delay={0.2}>
               <div style={{
-                position: "relative", aspectRatio: "1", maxWidth: 460, margin: "0 auto",
+                position: "relative", aspectRatio: "1", maxWidth: 480, margin: "0 auto",
               }}>
-                {/* Main box */}
+                {/* Main product photo */}
                 <div style={{
-                  position: "absolute", top: "10%", left: "10%", width: "65%", height: "55%",
-                  background: "linear-gradient(135deg, #D4A76A 0%, #C49450 100%)",
-                  borderRadius: 16, transform: "rotate(-6deg)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                  position: "absolute", inset: 0, borderRadius: 20, overflow: "hidden",
+                  boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
+                  transform: "rotate(-2deg)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                 }}>
-                  <div style={{
-                    width: "60%", height: "50%", borderRadius: 10,
-                    border: "2px dashed rgba(255,255,255,0.35)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "rgba(255,255,255,0.6)", fontSize: 28,
-                  }}>📦</div>
+                  <Photo name="IMG_9692" size="large" eager
+                    alt="Готовые коробки из микрогофрокартона производства ОДО Демакс-групп — пирамида разных размеров" />
                 </div>
-                {/* Smaller box */}
+                {/* Accent inset photo — corrugation texture */}
                 <div style={{
-                  position: "absolute", bottom: "12%", right: "8%", width: "48%", height: "40%",
-                  background: "linear-gradient(135deg, #E8D5B8 0%, #D4BFA0 100%)",
-                  borderRadius: 14, transform: "rotate(8deg)",
-                  boxShadow: "0 16px 50px rgba(0,0,0,0.25)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                  position: "absolute", top: "-6%", right: "-8%", width: "38%", aspectRatio: "1",
+                  borderRadius: 16, overflow: "hidden",
+                  boxShadow: "0 18px 40px rgba(0,0,0,0.4)",
+                  transform: "rotate(8deg)",
+                  border: "3px solid rgba(255,255,255,0.95)",
                 }}>
-                  <span style={{ fontSize: 24, opacity: 0.5 }}>🎂</span>
-                </div>
-                {/* Tiny accent box */}
-                <div style={{
-                  position: "absolute", top: "5%", right: "20%", width: "22%", height: "18%",
-                  background: "linear-gradient(135deg, #F0E0CC 0%, #E8D0B0 100%)",
-                  borderRadius: 10, transform: "rotate(-12deg)",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.2)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <span style={{ fontSize: 16, opacity: 0.4 }}>🧴</span>
+                  <Photo name="IMG_9657" size="medium"
+                    alt="Срез микрогофрокартона крупным планом" />
                 </div>
                 {/* Floating badge */}
                 <div style={{
-                  position: "absolute", bottom: "5%", left: "5%",
-                  background: "white", borderRadius: 12, padding: "12px 18px",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
+                  position: "absolute", bottom: "-4%", left: "-4%",
+                  background: "white", borderRadius: 14, padding: "12px 18px",
+                  boxShadow: "0 10px 40px rgba(0,0,0,0.25)",
                   display: "flex", alignItems: "center", gap: 10,
                 }}>
                   <div style={{
-                    width: 36, height: 36, borderRadius: 8,
+                    width: 40, height: 40, borderRadius: 10,
                     background: T.blueLight, display: "flex", alignItems: "center",
-                    justifyContent: "center", fontSize: 18,
+                    justifyContent: "center", fontSize: 20,
                   }}>✓</div>
                   <div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: T.text }}>Микрогофра</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: T.text }}>Микрогофра</div>
                     <div style={{ fontSize: 11, color: T.textMuted }}>Выдержит 5 кг</div>
                   </div>
                 </div>
@@ -543,11 +605,16 @@ function DemaksSite() {
                   border: `1px solid ${T.border}`, cursor: "pointer",
                 }}>
                   <div style={{
-                    background: n.img, height: 180,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 56, position: "relative",
+                    height: 180, position: "relative", overflow: "hidden",
                   }}>
-                    {n.icon}
+                    <Photo name={n.photo} size="medium" alt={`Коробки — ${n.title}`} />
+                    <div style={{
+                      position: "absolute", inset: 0, background: n.gradient,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 56, textShadow: "0 4px 20px rgba(0,0,0,0.25)",
+                    }}>
+                      {n.icon}
+                    </div>
                   </div>
                   <div style={{ padding: 24 }}>
                     <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>{n.title}</h3>
@@ -606,18 +673,16 @@ function DemaksSite() {
                 }}>
                   {p.tag && (
                     <div style={{
-                      position: "absolute", top: 12, right: 12,
+                      position: "absolute", top: 12, right: 12, zIndex: 2,
                       background: p.tag === "Хит" ? "#FEF3C7" : T.blueLight,
                       color: p.tag === "Хит" ? "#92400E" : T.blue,
                       fontSize: 11, fontWeight: 700, padding: "3px 10px",
                       borderRadius: 6,
                     }}>{p.tag}</div>
                   )}
-                  <div style={{
-                    background: p.color, height: 180,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 48, opacity: 0.8,
-                  }}>📦</div>
+                  <div style={{ height: 200, overflow: "hidden", background: T.bgAlt }}>
+                    <Photo name={p.photo} size="medium" alt={`${p.name} ${p.size}`} />
+                  </div>
                   <div style={{ padding: 20 }}>
                     <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>{p.name}</h3>
                     <p style={{ fontSize: 13, color: T.textMuted, marginBottom: 12 }}>{p.size}</p>
@@ -673,6 +738,49 @@ function DemaksSite() {
                   }}>{u.icon}</div>
                   <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>{u.title}</h3>
                   <p style={{ fontSize: 13, lineHeight: 1.65, color: T.textSoft }}>{u.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ PRODUCTION GALLERY ═══════ */}
+      <section style={{ padding: "80px 24px", background: T.bgAlt }}>
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 700, textTransform: "uppercase",
+                letterSpacing: 2, color: T.kraft, marginBottom: 12, display: "block",
+              }}>Производство</span>
+              <h2 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+                Так выглядит наш цех
+              </h2>
+              <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8, maxWidth: 560, margin: "8px auto 0" }}>
+                Своё оборудование под Могилёвом. Контролируем каждый этап — от рулона микрогофры до отгрузки на паллете.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="prod-grid">
+            {production.map((p, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <div className="card-hover prod-card" onClick={() => setLightbox(p.photo)} style={{
+                  borderRadius: T.radius, overflow: "hidden", cursor: "zoom-in",
+                  border: `1px solid ${T.border}`, background: T.white,
+                  position: "relative", height: 280,
+                }}>
+                  <Photo name={p.photo} size="medium" alt={`${p.title} — ${p.desc}`} />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.78) 100%)",
+                    display: "flex", flexDirection: "column", justifyContent: "flex-end",
+                    padding: 20, color: "white",
+                  }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>{p.title}</div>
+                    <div style={{ fontSize: 13, opacity: 0.85, lineHeight: 1.5 }}>{p.desc}</div>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -1206,6 +1314,17 @@ function DemaksSite() {
           </div>
         </div>
       </footer>
+
+      {/* ═══════ LIGHTBOX ═══════ */}
+      {lightbox && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); setLightbox(null); }} aria-label="Закрыть">×</button>
+          <picture>
+            <source srcSet={`${PHOTOS_L}/${lightbox}.webp`} type="image/webp" />
+            <img src={`${PHOTOS_L}/${lightbox}.jpg`} alt="" />
+          </picture>
+        </div>
+      )}
 
       {/* ═══════ WHATSAPP FLOAT ═══════ */}
       <a className="wa-float"

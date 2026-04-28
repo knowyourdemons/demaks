@@ -1,0 +1,5 @@
+photos/*.HEIC
+photos/*.heic
+photos/*.JPG
+photos/*.jpg
+scripts/
