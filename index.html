@@ -132,6 +132,37 @@ const catalog = [
   { name: "Набор коробок", size: "от 8×8 до 25×25 см", price: "от 1.20", tag: "Хит", photo: "IMG_9692" },
 ];
 
+const fourFlap = [
+  { size: "130×130×130", price: 0.55 },
+  { size: "130×130×500", price: 0.90 },
+  { size: "150×130×100", price: 0.55 },
+  { size: "150×150×150", price: 0.70 },
+  { size: "180×130×130", price: 0.65 },
+  { size: "200×150×100", price: 0.70 },
+  { size: "200×200×80",  price: 0.80 },
+  { size: "230×190×100", price: 0.80 },
+  { size: "250×200×100", price: 0.85 },
+  { size: "250×250×200", price: 1.10 },
+  { size: "250×250×250", price: 1.20 },
+  { size: "270×270×130", price: 1.00 },
+  { size: "290×260×100", price: 0.95 },
+  { size: "300×200×150", price: 0.95 },
+  { size: "300×300×300", price: 1.70 },
+  { size: "350×200×200", price: 1.00 },
+  { size: "350×300×200", price: 1.50 },
+  { size: "350×300×300", price: 1.80 },
+  { size: "400×300×150", price: 1.45 },
+  { size: "400×300×300", price: 1.95 },
+  { size: "400×350×300", price: 2.20 },
+  { size: "400×400×400", price: 2.85 },
+  { size: "450×350×350", price: 2.50 },
+  { size: "500×300×300", price: 2.25 },
+  { size: "500×350×300", price: 2.45 },
+  { size: "500×400×100", price: 2.20 },
+  { size: "550×350×200", price: 2.30 },
+  { size: "600×300×150", price: 1.90 },
+];
+
 const production = [
   { photo: "IMG_9710", title: "Свой производственный цех", desc: "1200 м² в Полётниках под Могилёвом" },
   { photo: "IMG_9660", title: "Печатно-высечная линия", desc: "Печать, биговка, высечка за один проход" },
@@ -277,6 +308,25 @@ function DemaksSite() {
   const [formNeed, setFormNeed] = useState("Коробки для тортов");
   const [mobileMenu, setMobileMenu] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+  const [ffFilter, setFfFilter] = useState("all");
+  const [ffSort, setFfSort] = useState("size-asc");
+
+  const ffMaxDim = (size) => Math.max(...size.split("×").map(n => parseInt(n, 10)));
+  const ffSizeNum = (size) => size.split("×").map(n => parseInt(n, 10)).reduce((a, b) => a * 10000 + b, 0);
+  const ffFiltered = fourFlap
+    .filter(b => {
+      const max = ffMaxDim(b.size);
+      if (ffFilter === "small")  return max <= 230;
+      if (ffFilter === "medium") return max > 230 && max <= 350;
+      if (ffFilter === "large")  return max > 350;
+      return true;
+    })
+    .sort((a, b) => {
+      if (ffSort === "price-asc")  return a.price - b.price;
+      if (ffSort === "price-desc") return b.price - a.price;
+      if (ffSort === "size-desc")  return ffSizeNum(b.size) - ffSizeNum(a.size);
+      return ffSizeNum(a.size) - ffSizeNum(b.size);
+    });
 
   useEffect(() => {
     if (!lightbox) return;
@@ -741,6 +791,140 @@ function DemaksSite() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════ 4-FLAP T-23B PRICELIST ═══════ */}
+      <section style={{ padding: "80px 24px", background: T.bg }}>
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{ textAlign: "center", marginBottom: 36 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 700, textTransform: "uppercase",
+                letterSpacing: 2, color: T.kraft, marginBottom: 12, display: "block",
+              }}>Прайс</span>
+              <h2 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+                Четырёхклапанные коробки Т-23В
+              </h2>
+              <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8, maxWidth: 600, margin: "8px auto 0" }}>
+                Бурый гофрокартон, без печати. От 50 шт, изготовление 2–3 рабочих дня. {fourFlap.length} готовых размеров.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div style={{
+              display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 20,
+              alignItems: "center", justifyContent: "space-between",
+            }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {[
+                  { id: "all",    label: `Все · ${fourFlap.length}` },
+                  { id: "small",  label: `Малые ≤230` },
+                  { id: "medium", label: `Средние 230–350` },
+                  { id: "large",  label: `Крупные >350` },
+                ].map(f => (
+                  <button key={f.id} onClick={() => setFfFilter(f.id)} style={{
+                    padding: "8px 14px", borderRadius: 100, fontSize: 13, fontWeight: 600,
+                    border: `1px solid ${ffFilter === f.id ? T.blue : T.border}`,
+                    background: ffFilter === f.id ? T.blue : T.white,
+                    color: ffFilter === f.id ? "white" : T.text,
+                    cursor: "pointer", fontFamily: "inherit",
+                    transition: "all 0.15s",
+                  }}>{f.label}</button>
+                ))}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 13, color: T.textMuted }}>Сортировка:</span>
+                <select value={ffSort} onChange={e => setFfSort(e.target.value)} style={{
+                  padding: "8px 12px", borderRadius: T.radiusSm, fontSize: 13, fontWeight: 500,
+                  border: `1px solid ${T.border}`, background: T.white, fontFamily: "inherit",
+                  cursor: "pointer", outline: "none",
+                }}>
+                  <option value="size-asc">размер ↑</option>
+                  <option value="size-desc">размер ↓</option>
+                  <option value="price-asc">цена ↑</option>
+                  <option value="price-desc">цена ↓</option>
+                </select>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <div style={{
+              background: T.white, borderRadius: T.radius, border: `1px solid ${T.border}`,
+              overflow: "hidden",
+            }}>
+              <div style={{ overflowX: "auto" }}>
+                <table style={{
+                  width: "100%", borderCollapse: "collapse", fontSize: 14, minWidth: 480,
+                }}>
+                  <thead>
+                    <tr style={{ background: T.bgAlt }}>
+                      <th style={{
+                        padding: "14px 20px", textAlign: "left", fontWeight: 700,
+                        fontSize: 12, textTransform: "uppercase", letterSpacing: 0.5,
+                        color: T.textMuted, borderBottom: `2px solid ${T.border}`,
+                      }}>Размер (Д×Ш×В), мм</th>
+                      <th style={{
+                        padding: "14px 20px", textAlign: "right", fontWeight: 700,
+                        fontSize: 12, textTransform: "uppercase", letterSpacing: 0.5,
+                        color: T.textMuted, borderBottom: `2px solid ${T.border}`,
+                      }}>Цена за шт., руб.</th>
+                      <th style={{
+                        padding: "14px 20px", textAlign: "right", fontWeight: 700,
+                        fontSize: 12, color: T.textMuted, borderBottom: `2px solid ${T.border}`,
+                        width: 1,
+                      }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ffFiltered.map((b, i) => (
+                      <tr key={b.size} style={{
+                        borderBottom: i < ffFiltered.length - 1 ? `1px solid ${T.border}` : "none",
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = T.bgAlt}
+                      onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                        <td style={{ padding: "12px 20px", fontWeight: 600 }}>{b.size}</td>
+                        <td style={{
+                          padding: "12px 20px", textAlign: "right",
+                          fontWeight: 700, color: T.blue, fontSize: 15,
+                        }}>{b.price.toFixed(2)}</td>
+                        <td style={{ padding: "10px 20px", textAlign: "right" }}>
+                          <a href="#contact" onClick={(e) => {
+                            e.preventDefault();
+                            setFormNeed("Корпоративный заказ");
+                            scrollTo("contact");
+                          }} style={{
+                            display: "inline-block",
+                            padding: "6px 14px", borderRadius: T.radiusSm,
+                            background: T.blueLight, color: T.blue, fontSize: 12, fontWeight: 600,
+                            textDecoration: "none",
+                          }}>Заказать</a>
+                        </td>
+                      </tr>
+                    ))}
+                    {ffFiltered.length === 0 && (
+                      <tr><td colSpan="3" style={{ padding: 32, textAlign: "center", color: T.textMuted }}>
+                        В выбранной группе размеров нет
+                      </td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <div style={{
+              marginTop: 20, padding: "16px 20px",
+              background: T.kraftBg, borderRadius: T.radiusSm,
+              fontSize: 13, color: T.textSoft, lineHeight: 1.65,
+            }}>
+              <strong style={{ color: T.text }}>Нужен другой размер или печать на коробке?</strong> Сделаем под заказ от 200 шт.
+              Свяжитесь с нами — рассчитаем стоимость в течение часа.
+            </div>
+          </Reveal>
         </div>
       </section>
 
