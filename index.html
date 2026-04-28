@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Демакс","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":"+375447999901","address":{"@type":"PostalAddress","streetAddress":"ул. Промышленная 12","addressLocality":"Могилёв","addressCountry":"BY"},"geo":{"@type":"GeoCoordinates","latitude":"53.9045","longitude":"30.3449"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":"https://demaks.by/og-image.jpg","sameAs":["https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==","https://t.me/demaks_orders_bot"]}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"ОДО «Демакс-групп»","legalName":"Общество с дополнительной ответственностью «Демакс-групп»","description":"Производство коробок из микрогофрокартона в Могилёве. Упаковка для тортов, кондитерских изделий, косметики и подарков.","url":"https://demaks.by","telephone":["+375291571517","+375291167700","+375447225614"],"email":"demaks-grupp@mail.ru","address":{"@type":"PostalAddress","streetAddress":"д. Полетники, ул. Центральная, 2А","addressRegion":"Могилёвская обл., Могилёвский р-н","postalCode":"213105","addressCountry":"BY"},"openingHours":"Mo-Fr 09:00-18:00","priceRange":"$$","image":"https://demaks.by/og-image.jpg","sameAs":["https://www.instagram.com/demaks_grupp?igsh=MW9iYTgzbmtzMzFvNw==","https://t.me/demaks_orders_bot"],"taxID":"790380841"}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какой минимальный заказ коробок?","acceptedAnswer":{"@type":"Answer","text":"Минимальный заказ — от 100 штук. Мы работаем с малыми тиражами для малого бизнеса."}},{"@type":"Question","name":"Какая коробка нужна для торта 26 см?","acceptedAnswer":{"@type":"Answer","text":"Для торта диаметром 24-26 см подойдёт коробка 28×28×14 см из микрогофрокартона. Цена от 2.80 руб. за штуку."}},{"@type":"Question","name":"Сколько времени занимает производство коробок?","acceptedAnswer":{"@type":"Answer","text":"Стандартный срок производства — 3-5 рабочих дней. Доставка по Могилёву и всей Беларуси."}},{"@type":"Question","name":"Из чего сделаны ваши коробки?","acceptedAnswer":{"@type":"Answer","text":"Мы производим коробки из микрогофрокартона — он прочнее обычного картона, выдерживает вес до 5 кг и подходит для пищевых продуктов."}},{"@type":"Question","name":"Вы делаете коробки для мыла и косметики?","acceptedAnswer":{"@type":"Answer","text":"Да, мы производим компактные коробки размерами от 8×8 см для мыла ручной работы, свечей и бомбочек для ванны."}}]}
@@ -912,7 +912,7 @@ function DemaksSite() {
                     <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 24 }}>Форма заявки</h3>
                     {[
                       { label: "Ваше имя", placeholder: "Анна", type: "text", value: formName, onChange: e => setFormName(e.target.value) },
-                      { label: "Телефон или Telegram", placeholder: "+375 44 799 99 01", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
+                      { label: "Телефон или Telegram", placeholder: "+375 29 157 15 17", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
                     ].map((f, i) => (
                       <div key={i} style={{ marginBottom: 16 }}>
                         <label style={{
@@ -993,31 +993,57 @@ function DemaksSite() {
                 <div style={{
                   background: T.white, borderRadius: T.radius, padding: 24,
                   border: `1px solid ${T.border}`,
-                  display: "flex", alignItems: "center", gap: 16,
+                  display: "flex", alignItems: "flex-start", gap: 16,
                 }}>
                   <div style={{
                     width: 48, height: 48, borderRadius: 12, background: T.blueLight,
-                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
+                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0,
                   }}>📞</div>
                   <div>
-                    <div style={{ fontSize: 13, color: T.textMuted }}>Позвонить</div>
-                    <div style={{ fontSize: 18, fontWeight: 700 }}>Саша: +375 (44) 799-99-01</div>
+                    <div style={{ fontSize: 13, color: T.textMuted, marginBottom: 4 }}>Позвонить</div>
+                    <a href="tel:+375291571517" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none" }}>+375 (29) 157-15-17</a>
+                    <a href="tel:+375291167700" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>+375 (29) 116-77-00</a>
+                    <a href="tel:+375447225614" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>
+                      +375 (44) 722-56-14 <span style={{ fontSize: 13, fontWeight: 500, color: T.textMuted }}>(офис)</span>
+                    </a>
                   </div>
                 </div>
+
+                {/* Email */}
+                <a href="mailto:demaks-grupp@mail.ru" style={{
+                  background: T.white, borderRadius: T.radius, padding: 24,
+                  border: `1px solid ${T.border}`, textDecoration: "none", color: T.text,
+                  display: "flex", alignItems: "center", gap: 16,
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = T.blue}
+                onMouseLeave={e => e.currentTarget.style.borderColor = T.border}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: 12, background: T.blueLight,
+                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
+                  }}>✉️</div>
+                  <div>
+                    <div style={{ fontSize: 13, color: T.textMuted }}>Электронная почта</div>
+                    <div style={{ fontSize: 16, fontWeight: 700 }}>demaks-grupp@mail.ru</div>
+                  </div>
+                </a>
 
                 {/* Address */}
                 <div style={{
                   background: T.white, borderRadius: T.radius, padding: 24,
                   border: `1px solid ${T.border}`,
-                  display: "flex", alignItems: "center", gap: 16,
+                  display: "flex", alignItems: "flex-start", gap: 16,
                 }}>
                   <div style={{
                     width: 48, height: 48, borderRadius: 12, background: T.kraftBg,
-                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
+                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0,
                   }}>📍</div>
                   <div>
                     <div style={{ fontSize: 13, color: T.textMuted }}>Производство</div>
-                    <div style={{ fontSize: 15, fontWeight: 600 }}>г. Могилёв, ул. Промышленная 12</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.45 }}>
+                      213105, Могилёвская обл., Могилёвский р-н,<br/>
+                      Вейнянский с/с, д. Полетники, ул. Центральная, 2А
+                    </div>
                   </div>
                 </div>
 
@@ -1063,6 +1089,98 @@ function DemaksSite() {
         </div>
       </section>
 
+      {/* ═══════ COMPANY CARD / REQUISITES ═══════ */}
+      <section style={{ padding: "60px 24px", background: T.bgAlt }}>
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 700, textTransform: "uppercase",
+                letterSpacing: 2, color: T.kraft, marginBottom: 12, display: "block",
+              }}>Для юридических лиц</span>
+              <h2 style={{ fontSize: "clamp(24px, 3.6vw, 34px)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+                Реквизиты компании
+              </h2>
+              <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8 }}>
+                Карточка предприятия — для договоров и оплаты по безналу
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div style={{
+              background: T.white, borderRadius: T.radius, padding: 32,
+              border: `1px solid ${T.border}`,
+            }}>
+              <div style={{
+                display: "grid", gridTemplateColumns: "1fr", gap: 0,
+              }}>
+                {[
+                  { l: "Полное наименование", v: "Общество с дополнительной ответственностью «Демакс-групп»" },
+                  { l: "Краткое наименование", v: "ОДО «Демакс-групп»" },
+                  { l: "Директор", v: "Лобанов Денис Михайлович" },
+                  { l: "Адрес регистрации", v: "212013, г. Могилёв, ул. Алтайская, д. 22А, офис 10" },
+                  { l: "Фактический адрес", v: "213105, Могилёвская обл., Могилёвский р-н, Вейнянский с/с, д. Полетники, ул. Центральная, 2А" },
+                  { l: "Электронная почта", v: "demaks-grupp@mail.ru" },
+                  { l: "Контактные телефоны", v: "+375 (29) 157-15-17; +375 (29) 116-77-00; +375 (44) 722-56-14 (офис)" },
+                  { l: "УНП", v: "790380841" },
+                  { l: "ОКПО", v: "293504257000" },
+                  { l: "Банк", v: "ЦБУ №14 в ОАО «БНБ-Банк», г. Могилёв, ул. Ленинская, 56" },
+                  { l: "БИК / SWIFT банка", v: "BLNBBY2X" },
+                  { l: "УНП банка", v: "100513485" },
+                  { l: "Расчётный счёт (BYN)", v: "BY32BLNB30120000991355000933" },
+                  { l: "Расчётный счёт (RUB)", v: "BY68BLNB30120000991355001643" },
+                ].map((row, i) => (
+                  <div key={i} style={{
+                    display: "grid",
+                    gridTemplateColumns: "minmax(180px, 260px) 1fr",
+                    gap: 16,
+                    padding: "14px 0",
+                    borderBottom: i < 13 ? `1px solid ${T.border}` : "none",
+                    fontSize: 14,
+                    lineHeight: 1.55,
+                  }}>
+                    <div style={{ color: T.textMuted, fontWeight: 500 }}>{row.l}</div>
+                    <div style={{ color: T.text, fontWeight: 600, wordBreak: "break-word" }}>{row.v}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{
+                marginTop: 24, paddingTop: 20, borderTop: `1px solid ${T.border}`,
+                display: "flex", gap: 12, flexWrap: "wrap",
+              }}>
+                <button onClick={() => {
+                  const text = `Карточка предприятия\n\nПолное наименование: Общество с дополнительной ответственностью «Демакс-групп»\nКраткое: ОДО «Демакс-групп»\nДиректор: Лобанов Денис Михайлович\nАдрес регистрации: 212013, г. Могилёв, ул. Алтайская, д. 22А, офис 10\nФактический адрес: 213105, Могилёвская обл., Могилёвский р-н, Вейнянский с/с, д. Полетники, ул. Центральная, 2А\nE-mail: demaks-grupp@mail.ru\nТелефоны: +375 (29) 157-15-17; +375 (29) 116-77-00; +375 (44) 722-56-14 (офис)\nУНП: 790380841\nОКПО: 293504257000\n\nБанк: ЦБУ №14 в ОАО «БНБ-Банк», г. Могилёв, ул. Ленинская, 56\nБИК/SWIFT: BLNBBY2X\nУНП банка: 100513485\nР/с (BYN): BY32BLNB30120000991355000933\nР/с (RUB): BY68BLNB30120000991355001643`;
+                  navigator.clipboard.writeText(text).then(() => {
+                    alert("Реквизиты скопированы");
+                  });
+                }} style={{
+                  background: T.blue, color: "white", padding: "11px 22px",
+                  borderRadius: T.radiusSm, fontSize: 14, fontWeight: 600,
+                  border: "none", cursor: "pointer", fontFamily: "inherit",
+                  transition: "background 0.2s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = T.blueDark}
+                onMouseLeave={e => e.currentTarget.style.background = T.blue}>
+                  📋 Скопировать реквизиты
+                </button>
+                <a href="mailto:demaks-grupp@mail.ru?subject=Запрос%20реквизитов%20ОДО%20«Демакс-групп»" style={{
+                  background: T.white, color: T.text, padding: "11px 22px",
+                  borderRadius: T.radiusSm, fontSize: 14, fontWeight: 600,
+                  border: `1px solid ${T.border}`, textDecoration: "none",
+                  transition: "border-color 0.2s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = T.blue}
+                onMouseLeave={e => e.currentTarget.style.borderColor = T.border}>
+                  Запросить по e-mail
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ═══════ FOOTER ═══════ */}
       <footer style={{
         background: "#0F172A", color: "rgba(255,255,255,0.5)", padding: "40px 24px",
@@ -1082,8 +1200,9 @@ function DemaksSite() {
               ДЕМАКС
             </span>
           </div>
-          <div style={{ fontSize: 13 }}>
-            © 2026 Демакс. Производство упаковки из микрогофрокартона.
+          <div style={{ fontSize: 13, textAlign: "right" }}>
+            © 2026 ОДО «Демакс-групп». Производство упаковки из микрогофрокартона.<br/>
+            УНП 790380841
           </div>
         </div>
       </footer>
