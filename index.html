@@ -522,6 +522,38 @@ function DemaksSite() {
                 </div>
               </Reveal>
 
+              <Reveal delay={0.4}>
+                <div style={{
+                  display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap",
+                }}>
+                  {[
+                    { label: "Сертификат ЕАС", href: "/docs/eaes-declaration.pdf" },
+                    { label: "БелТПП", href: "/docs/beltpp-certificate.pdf" },
+                    { label: "ГОСТ 9142-2014", href: null },
+                  ].map((b, i) => {
+                    const inner = (
+                      <span style={{
+                        display: "inline-flex", alignItems: "center", gap: 6,
+                        background: "rgba(255,255,255,0.08)",
+                        border: "1px solid rgba(255,255,255,0.18)",
+                        color: "rgba(255,255,255,0.85)",
+                        padding: "6px 12px", borderRadius: 100,
+                        fontSize: 12, fontWeight: 600,
+                        backdropFilter: "blur(6px)",
+                      }}>
+                        <span style={{ color: T.green, fontSize: 14, lineHeight: 1 }}>✓</span>
+                        {b.label}
+                      </span>
+                    );
+                    return b.href ? (
+                      <a key={i} href={b.href} target="_blank" rel="noopener" style={{ textDecoration: "none" }}>{inner}</a>
+                    ) : (
+                      <span key={i}>{inner}</span>
+                    );
+                  })}
+                </div>
+              </Reveal>
+
               <Reveal delay={0.45}>
                 <div style={{
                   display: "flex", gap: 32, marginTop: 48,
@@ -793,6 +825,89 @@ function DemaksSite() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════ DOCUMENTS & CERTIFICATES ═══════ */}
+      <section style={{ padding: "80px 24px", background: T.bg }}>
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{ textAlign: "center", marginBottom: 40 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 700, textTransform: "uppercase",
+                letterSpacing: 2, color: T.kraft, marginBottom: 12, display: "block",
+              }}>Доверие</span>
+              <h2 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+                Документы и сертификаты
+              </h2>
+              <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8, maxWidth: 600, margin: "8px auto 0" }}>
+                Работаем легально с 2007 года. Продукция сертифицирована для рынка ЕАЭС.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="cert-grid">
+            {[
+              {
+                icon: "🇪🇦", title: "Декларация ЕАЭС", subtitle: "ТР ТС 005/2011",
+                desc: "Соответствие техническому регламенту Таможенного союза «О безопасности упаковки». Действительна до 08.07.2030.",
+                cta: "Скачать PDF", href: "/docs/eaes-declaration.pdf",
+              },
+              {
+                icon: "📜", title: "Сертификат БелТПП", subtitle: "продукция собственного производства",
+                desc: "Подтверждение Белорусской торгово-промышленной палаты — допуск к тендерам и госзакупкам. Действителен до 18.09.2026.",
+                cta: "Скачать PDF", href: "/docs/beltpp-certificate.pdf",
+              },
+              {
+                icon: "🔬", title: "Испытания на прочность", subtitle: "ГОСТ 9142-2014, ГОСТ 18211-2018",
+                desc: "Лаборатория «ЮЛТА-комплекс», протокол №278/25 от 02.07.2025. Образцы выдержали удар при свободном падении с 1 м с 15-кг загрузкой.",
+                cta: null,
+              },
+              {
+                icon: "🏛", title: "С 2007 года на рынке", subtitle: "18 лет производства упаковки",
+                desc: "ОДО «Демакс-групп» зарегистрировано Могилёвским облисполкомом 27.07.2007. УНП 790380841 — проверяется в ЕГР.",
+                cta: null,
+              },
+            ].map((c, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <div style={{
+                  background: T.white, borderRadius: T.radius, padding: 24,
+                  border: `1px solid ${T.border}`, height: "100%",
+                  display: "flex", flexDirection: "column", gap: 12,
+                  transition: "border-color 0.2s, transform 0.2s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = T.blue; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.transform = "none"; }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: 12, background: T.blueLight,
+                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26,
+                  }}>{c.icon}</div>
+                  <div>
+                    <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 4 }}>{c.title}</h3>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: T.kraft, textTransform: "uppercase", letterSpacing: 0.5 }}>{c.subtitle}</div>
+                  </div>
+                  <p style={{ fontSize: 13, lineHeight: 1.65, color: T.textSoft, flex: 1 }}>{c.desc}</p>
+                  {c.cta && (
+                    <a href={c.href} target="_blank" rel="noopener" style={{
+                      display: "inline-flex", alignItems: "center", gap: 6,
+                      fontSize: 13, fontWeight: 600, color: T.blue, textDecoration: "none",
+                      paddingTop: 8, borderTop: `1px solid ${T.border}`,
+                    }}>
+                      {c.cta} <span style={{ fontSize: 14 }}>↗</span>
+                    </a>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.3}>
+            <p style={{
+              textAlign: "center", marginTop: 24, fontSize: 13, color: T.textMuted,
+            }}>
+              Свидетельство о госрегистрации и протокол испытаний целиком — <a href="mailto:demaks-grupp@mail.ru?subject=Запрос документов ОДО «Демакс-групп»" style={{ color: T.blue, textDecoration: "none", fontWeight: 600 }}>вышлем по запросу</a>
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -1294,89 +1409,6 @@ function DemaksSite() {
                 </a>
               </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ═══════ DOCUMENTS & CERTIFICATES ═══════ */}
-      <section style={{ padding: "60px 24px", background: T.bg }}>
-        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-          <Reveal>
-            <div style={{ textAlign: "center", marginBottom: 32 }}>
-              <span style={{
-                fontSize: 12, fontWeight: 700, textTransform: "uppercase",
-                letterSpacing: 2, color: T.kraft, marginBottom: 12, display: "block",
-              }}>Доверие</span>
-              <h2 style={{ fontSize: "clamp(24px, 3.6vw, 34px)", fontWeight: 800, letterSpacing: "-0.02em" }}>
-                Документы и сертификаты
-              </h2>
-              <p style={{ fontSize: 15, color: T.textSoft, marginTop: 8, maxWidth: 600, margin: "8px auto 0" }}>
-                Работаем легально с 2007 года. Продукция сертифицирована для рынка ЕАЭС.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="cert-grid">
-            {[
-              {
-                icon: "🇪🇦", title: "Декларация ЕАЭС", subtitle: "ТР ТС 005/2011",
-                desc: "Соответствие техническому регламенту Таможенного союза «О безопасности упаковки». Действительна до 08.07.2030.",
-                cta: "Скачать PDF", href: "/docs/eaes-declaration.pdf", external: true,
-              },
-              {
-                icon: "📜", title: "Сертификат БелТПП", subtitle: "продукция собственного производства",
-                desc: "Подтверждение Белорусской торгово-промышленной палаты — допуск к тендерам и госзакупкам. Действителен до 18.09.2026.",
-                cta: "Скачать PDF", href: "/docs/beltpp-certificate.pdf", external: true,
-              },
-              {
-                icon: "🔬", title: "Испытания на прочность", subtitle: "ГОСТ 9142-2014, ГОСТ 18211-2018",
-                desc: "Лаборатория «ЮЛТА-комплекс», протокол №278/25 от 02.07.2025. Образцы выдержали удар при свободном падении с 1 м с 15-кг загрузкой.",
-                cta: null,
-              },
-              {
-                icon: "🏛", title: "С 2007 года на рынке", subtitle: "18 лет производства упаковки",
-                desc: "ОДО «Демакс-групп» зарегистрировано Могилёвским облисполкомом 27.07.2007. УНП 790380841 — проверяется в ЕГР.",
-                cta: null,
-              },
-            ].map((c, i) => (
-              <Reveal key={i} delay={i * 0.08}>
-                <div style={{
-                  background: T.white, borderRadius: T.radius, padding: 24,
-                  border: `1px solid ${T.border}`, height: "100%",
-                  display: "flex", flexDirection: "column", gap: 12,
-                  transition: "border-color 0.2s, transform 0.2s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = T.blue; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.transform = "none"; }}>
-                  <div style={{
-                    width: 52, height: 52, borderRadius: 12, background: T.blueLight,
-                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26,
-                  }}>{c.icon}</div>
-                  <div>
-                    <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 4 }}>{c.title}</h3>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: T.kraft, textTransform: "uppercase", letterSpacing: 0.5 }}>{c.subtitle}</div>
-                  </div>
-                  <p style={{ fontSize: 13, lineHeight: 1.65, color: T.textSoft, flex: 1 }}>{c.desc}</p>
-                  {c.cta && (
-                    <a href={c.href} target="_blank" rel="noopener" style={{
-                      display: "inline-flex", alignItems: "center", gap: 6,
-                      fontSize: 13, fontWeight: 600, color: T.blue, textDecoration: "none",
-                      paddingTop: 8, borderTop: `1px solid ${T.border}`,
-                    }}>
-                      {c.cta} <span style={{ fontSize: 14 }}>↗</span>
-                    </a>
-                  )}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.3}>
-            <p style={{
-              textAlign: "center", marginTop: 24, fontSize: 13, color: T.textMuted,
-            }}>
-              Свидетельство о госрегистрации и протокол испытаний целиком — <a href="mailto:demaks-grupp@mail.ru?subject=Запрос документов ОДО «Демакс-групп»" style={{ color: T.blue, textDecoration: "none", fontWeight: 600 }}>вышлем по запросу</a>
-            </p>
           </Reveal>
         </div>
       </section>
