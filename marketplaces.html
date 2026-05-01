@@ -79,7 +79,9 @@ li{margin-bottom:6px}
 .footer{background:#1F1A14;color:rgba(255,255,255,0.55);padding:40px 0;margin-top:60px;font-size:13px}
 .footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .footer a{color:rgba(255,255,255,0.85);text-decoration:none}
-@media(max-width:720px){.grid-2{grid-template-columns:1fr}.fact-grid{grid-template-columns:1fr}.cta-block{padding:24px}}
+@media(max-width:720px){.grid-2{grid-template-columns:1fr}.fact-grid{grid-template-columns:1fr}.cta-block{padding:24px}.mp-inputs{grid-template-columns:1fr !important}}
+#mp-l:focus,#mp-w:focus,#mp-h:focus{border-color:#B8956A !important}
+#mp-go:hover{background:#0F0A05 !important}
 </style>
 </head>
 <body>
@@ -132,6 +134,98 @@ li{margin-bottom:6px}
     <p>От 50 шт — для небольших селлеров и стартапов. От 200 шт — для маркированных партий с печатью логотипа или нестандартного размера. Доставка по Могилёву — в день готовности, по Беларуси — через Европочту, СДЭК или Белпочту, 1–2 рабочих дня.</p>
   </div>
 </section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Калькулятор: подбор коробки под габариты товара</h2>
+    <p>Введите размеры товара в миллиметрах — подберём ближайший подходящий короб из стокового прайса Т-23В.</p>
+    <div id="mp-calc" style="background:#fff;border:1px solid #E8E1D6;border-radius:14px;padding:24px;margin:18px 0">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px" class="mp-inputs">
+        <label style="display:block">
+          <span style="display:block;font-size:12px;font-weight:600;color:#5A5048;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Длина (мм)</span>
+          <input id="mp-l" type="number" min="50" max="800" inputmode="numeric" placeholder="200" style="width:100%;padding:10px 12px;font-size:15px;border:1px solid #E8E1D6;border-radius:8px;font-family:inherit;outline:none">
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:12px;font-weight:600;color:#5A5048;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Ширина (мм)</span>
+          <input id="mp-w" type="number" min="50" max="800" inputmode="numeric" placeholder="150" style="width:100%;padding:10px 12px;font-size:15px;border:1px solid #E8E1D6;border-radius:8px;font-family:inherit;outline:none">
+        </label>
+        <label style="display:block">
+          <span style="display:block;font-size:12px;font-weight:600;color:#5A5048;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Высота (мм)</span>
+          <input id="mp-h" type="number" min="50" max="800" inputmode="numeric" placeholder="80" style="width:100%;padding:10px 12px;font-size:15px;border:1px solid #E8E1D6;border-radius:8px;font-family:inherit;outline:none">
+        </label>
+      </div>
+      <label style="display:inline-flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;user-select:none;margin-bottom:14px">
+        <input id="mp-pad" type="checkbox" checked style="width:16px;height:16px;accent-color:#B8956A">
+        Запас 20 мм по каждой стороне (под пузырьковую плёнку или фиксацию)
+      </label>
+      <div style="margin-top:6px">
+        <button id="mp-go" style="background:#1F1A14;color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;transition:background 0.2s">Подобрать коробку</button>
+      </div>
+      <div id="mp-result" style="margin-top:18px"></div>
+    </div>
+    <p style="font-size:13px;color:#6B5F52">Результат автоматически выберет наименьшую подходящую коробку из 28 стоковых размеров. Для нестандартных габаритов или с печатью — заказ от 200 шт.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var SKU = [
+    {s:"130×130×130",d:[130,130,130],p:0.50},{s:"130×130×500",d:[130,130,500],p:0.85},
+    {s:"150×130×100",d:[150,130,100],p:0.50},{s:"150×150×150",d:[150,150,150],p:0.65},
+    {s:"180×130×130",d:[180,130,130],p:0.60},{s:"200×150×100",d:[200,150,100],p:0.65},
+    {s:"200×200×80", d:[200,200,80], p:0.75},{s:"230×190×100",d:[230,190,100],p:0.75},
+    {s:"250×200×100",d:[250,200,100],p:0.80},{s:"250×250×200",d:[250,250,200],p:1.05},
+    {s:"250×250×250",d:[250,250,250],p:1.15},{s:"270×270×130",d:[270,270,130],p:0.95},
+    {s:"290×260×100",d:[290,260,100],p:0.90},{s:"300×200×150",d:[300,200,150],p:0.90},
+    {s:"300×300×300",d:[300,300,300],p:1.65},{s:"350×200×200",d:[350,200,200],p:0.95},
+    {s:"350×300×200",d:[350,300,200],p:1.45},{s:"350×300×300",d:[350,300,300],p:1.75},
+    {s:"400×300×150",d:[400,300,150],p:1.40},{s:"400×300×300",d:[400,300,300],p:1.90},
+    {s:"400×350×300",d:[400,350,300],p:2.15},{s:"400×400×400",d:[400,400,400],p:2.80},
+    {s:"450×350×350",d:[450,350,350],p:2.45},{s:"500×300×300",d:[500,300,300],p:2.20},
+    {s:"500×350×300",d:[500,350,300],p:2.40},{s:"500×400×100",d:[500,400,100],p:2.15},
+    {s:"550×350×200",d:[550,350,200],p:2.25},{s:"600×300×150",d:[600,300,150],p:1.85}
+  ];
+  function pick(l,w,h,pad){
+    var need = [l+pad, w+pad, h+pad].sort(function(a,b){return b-a});
+    var best = null;
+    for (var i=0;i<SKU.length;i++){
+      var box = SKU[i].d.slice().sort(function(a,b){return b-a});
+      if (box[0]>=need[0] && box[1]>=need[1] && box[2]>=need[2]){
+        var vol = box[0]*box[1]*box[2];
+        if (!best || vol < best.vol) best = {sku:SKU[i], vol:vol};
+      }
+    }
+    return best ? best.sku : null;
+  }
+  var resEl = document.getElementById('mp-result');
+  document.getElementById('mp-go').addEventListener('click', function(){
+    var l = parseInt(document.getElementById('mp-l').value, 10);
+    var w = parseInt(document.getElementById('mp-w').value, 10);
+    var h = parseInt(document.getElementById('mp-h').value, 10);
+    if (!l || !w || !h) {
+      resEl.innerHTML = '<div style="padding:14px 16px;background:#FEF3C7;border:1px solid #F59E0B;border-radius:8px;font-size:14px;color:#92400E">Введите все три размера товара.</div>';
+      return;
+    }
+    var pad = document.getElementById('mp-pad').checked ? 20 : 0;
+    var match = pick(l, w, h, pad);
+    if (match) {
+      resEl.innerHTML =
+        '<div style="padding:18px 20px;background:#F7F0E7;border:1px solid #E8D9C5;border-radius:10px">' +
+          '<div style="font-size:12px;color:#6B5F52;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Рекомендованная коробка</div>' +
+          '<div style="font-size:22px;font-weight:800;color:#1F1A14;letter-spacing:-0.01em">' + match.s + ' мм</div>' +
+          '<div style="font-size:14px;color:#5A5048;margin-top:4px">Бурый гофрокартон Т-23В · от ' + match.p.toFixed(2) + ' руб./шт при тираже от 50 шт</div>' +
+          '<a href="/#contact" style="display:inline-block;margin-top:14px;background:#1F1A14;color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px">Запросить расчёт</a>' +
+        '</div>';
+    } else {
+      resEl.innerHTML =
+        '<div style="padding:18px 20px;background:#fff;border:1px solid #E8E1D6;border-radius:10px">' +
+          '<div style="font-size:14px;color:#5A5048;line-height:1.6">Стандартного размера под ваш товар нет — изготовим под индивидуальный размер от 200 шт. ' +
+          '<a href="/#contact" style="color:#B8956A;font-weight:600">Запросить расчёт</a>.</div>' +
+        '</div>';
+    }
+  });
+})();
+</script>
 
 <section class="section">
   <div class="wrap">
