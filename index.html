@@ -749,6 +749,16 @@ function DemaksSite() {
         @media (max-width: 900px) {
           .hero-bg-macro { display: none; }
         }
+        /* Tel: ссылки в карточке контактов — подчёркивание/цвет на hover */
+        .phone-link { transition: color 0.15s; }
+        .phone-link:hover { color: ${T.kraft}; }
+        /* Реквизиты: на десктопе — две колонки; на мобильном — стек, лейбл сверху */
+        .req-row { display: grid; grid-template-columns: minmax(200px, 260px) 1fr; gap: 16px; }
+        .req-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        @media (max-width: 720px) {
+          .req-row { grid-template-columns: 1fr; gap: 4px; }
+          .req-label { font-size: 11px; }
+        }
       `}</style>
 
       <Nav onScroll={scrollTo} />
@@ -1705,9 +1715,9 @@ function DemaksSite() {
                   }}>📞</div>
                   <div>
                     <div style={{ fontSize: 13, color: T.textMuted, marginBottom: 4 }}>Позвонить</div>
-                    <a href="tel:+375291571517" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none" }}>+375 (29) 157-15-17</a>
-                    <a href="tel:+375291167700" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>+375 (29) 116-77-00</a>
-                    <a href="tel:+375447225614" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>
+                    <a href="tel:+375291571517" className="phone-link" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none" }}>+375 (29) 157-15-17</a>
+                    <a href="tel:+375291167700" className="phone-link" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>+375 (29) 116-77-00</a>
+                    <a href="tel:+375447225614" className="phone-link" style={{ display: "block", fontSize: 16, fontWeight: 700, color: T.text, textDecoration: "none", marginTop: 2 }}>
                       +375 (44) 722-56-14 <span style={{ fontSize: 13, fontWeight: 500, color: T.textMuted }}>(офис)</span>
                     </a>
                   </div>
@@ -1733,23 +1743,31 @@ function DemaksSite() {
                 </a>
 
                 {/* Address */}
-                <div style={{
-                  background: T.white, borderRadius: T.radius, padding: 24,
-                  border: `1px solid ${T.border}`,
-                  display: "flex", alignItems: "flex-start", gap: 16,
-                }}>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Демакс-групп, д. Полетники, ул. Центральная, 2А, Могилёвский р-н")}`}
+                  target="_blank" rel="noopener"
+                  style={{
+                    background: T.white, borderRadius: T.radius, padding: 24,
+                    border: `1px solid ${T.border}`, textDecoration: "none", color: T.text,
+                    display: "flex", alignItems: "flex-start", gap: 16,
+                    transition: "border-color 0.2s",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = T.kraft}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = T.border}>
                   <div style={{
                     width: 48, height: 48, borderRadius: 12, background: T.kraftBg,
                     display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0,
                   }}>📍</div>
                   <div>
-                    <div style={{ fontSize: 13, color: T.textMuted }}>Производство</div>
+                    <div style={{ fontSize: 13, color: T.textMuted, display: "flex", alignItems: "center", gap: 6 }}>
+                      Производство <span style={{ fontSize: 11, color: T.kraft, fontWeight: 600 }}>↗ открыть в картах</span>
+                    </div>
                     <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.45 }}>
                       213105, Могилёвская обл., Могилёвский р-н,<br/>
                       Вейнянский с/с, д. Полетники, ул. Центральная, 2А
                     </div>
                   </div>
-                </div>
+                </a>
 
                 {/* Work hours */}
                 <div style={{
@@ -1823,10 +1841,17 @@ function DemaksSite() {
                   { l: "Полное наименование", v: "Общество с дополнительной ответственностью «Демакс-групп»" },
                   { l: "Краткое наименование", v: "ОДО «Демакс-групп»" },
                   { l: "Директор", v: "Лобанов Денис Михайлович" },
-                  { l: "Адрес регистрации", v: "212013, г. Могилёв, ул. Алтайская, д. 22А, офис 10" },
-                  { l: "Фактический адрес", v: "213105, Могилёвская обл., Могилёвский р-н, Вейнянский с/с, д. Полетники, ул. Центральная, 2А" },
-                  { l: "Электронная почта", v: "demaks-grupp@mail.ru" },
-                  { l: "Контактные телефоны", v: "+375 (29) 157-15-17; +375 (29) 116-77-00; +375 (44) 722-56-14 (офис)" },
+                  { l: "Адрес регистрации",  v: "212013, г. Могилёв, ул. Алтайская, д. 22А, офис 10",
+                    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Могилёв, ул. Алтайская, 22А")}` },
+                  { l: "Фактический адрес",   v: "213105, Могилёвская обл., Могилёвский р-н, Вейнянский с/с, д. Полетники, ул. Центральная, 2А",
+                    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Демакс-групп, д. Полетники, ул. Центральная, 2А, Могилёвский р-н")}` },
+                  { l: "Электронная почта", v: "demaks-grupp@mail.ru", href: "mailto:demaks-grupp@mail.ru" },
+                  { l: "Контактные телефоны",
+                    phones: [
+                      { v: "+375 (29) 157-15-17", href: "tel:+375291571517" },
+                      { v: "+375 (29) 116-77-00", href: "tel:+375291167700" },
+                      { v: "+375 (44) 722-56-14 (офис)", href: "tel:+375447225614" },
+                    ] },
                   { l: "УНП", v: "790380841" },
                   { l: "ОКПО", v: "293504257000" },
                   { l: "Банк", v: "ЦБУ №14 в ОАО «БНБ-Банк», г. Могилёв, ул. Ленинская, 56" },
@@ -1835,17 +1860,32 @@ function DemaksSite() {
                   { l: "Расчётный счёт (BYN)", v: "BY32BLNB30120000991355000933" },
                   { l: "Расчётный счёт (RUB)", v: "BY68BLNB30120000991355001643" },
                 ].map((row, i) => (
-                  <div key={i} style={{
-                    display: "grid",
-                    gridTemplateColumns: "minmax(180px, 260px) 1fr",
-                    gap: 16,
+                  <div key={i} className="req-row" style={{
                     padding: "14px 0",
                     borderBottom: i < 13 ? `1px solid ${T.border}` : "none",
                     fontSize: 14,
                     lineHeight: 1.55,
                   }}>
-                    <div style={{ color: T.textMuted, fontWeight: 500 }}>{row.l}</div>
-                    <div style={{ color: T.text, fontWeight: 600, wordBreak: "break-word" }}>{row.v}</div>
+                    <div className="req-label" style={{ color: T.textMuted, fontWeight: 500 }}>{row.l}</div>
+                    <div className="req-value" style={{ color: T.text, fontWeight: 600, wordBreak: "break-word" }}>
+                      {row.phones ? (
+                        row.phones.map((p, k) => (
+                          <a key={k} href={p.href} className="phone-link"
+                             style={{ color: T.text, textDecoration: "none", marginRight: 10, whiteSpace: "nowrap" }}>
+                            {p.v}{k < row.phones.length - 1 ? ";" : ""}
+                          </a>
+                        ))
+                      ) : row.href ? (
+                        <a href={row.href} target={row.href.startsWith("http") ? "_blank" : undefined}
+                           rel={row.href.startsWith("http") ? "noopener" : undefined}
+                           className="phone-link"
+                           style={{ color: T.text, textDecoration: "none" }}>
+                          {row.v}
+                        </a>
+                      ) : (
+                        row.v
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
