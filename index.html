@@ -590,6 +590,7 @@ function DemaksSite() {
   const [formName, setFormName] = useState("");
   const [formPhone, setFormPhone] = useState("");
   const [formNeed, setFormNeed] = useState("Коробки для тортов");
+  const [formHp, setFormHp] = useState("");
   const [mobileMenu, setMobileMenu] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const [ffFilter, setFfFilter] = useState("all");
@@ -628,17 +629,16 @@ function DemaksSite() {
     if (!formName.trim()) { setFormError("Укажите ваше имя"); return; }
     if (!formPhone.trim()) { setFormError("Укажите телефон"); return; }
     setFormSending(true);
-    const text = `📦 Новая заявка с сайта!\n\n👤 Имя: ${formName}\n📞 Телефон: ${formPhone}\n📋 Что нужно: ${formNeed}`;
     try {
-      const res = await fetch("https://api.telegram.org/bot8236052358:AAEe4EE9Cjde_3fHVcfouE69Hgv9TOOaa0Q/sendMessage", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: "-5260600946", text, parse_mode: "HTML" }),
+        body: JSON.stringify({ name: formName, phone: formPhone, need: formNeed, hp: formHp }),
       });
       if (!res.ok) throw new Error("Ошибка отправки");
       setFormSent(true);
     } catch (e) {
-      setFormError("Не удалось отправить заявку. Попробуйте ещё раз.");
+      setFormError("Не удалось отправить заявку. Попробуйте ещё раз или напишите в Telegram.");
     } finally {
       setFormSending(false);
     }
@@ -1717,6 +1717,11 @@ function DemaksSite() {
                       }}>
                         Размер, тираж и нужна ли печать — уточним после отправки заявки.
                       </div>
+                    </div>
+                    <div style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }} aria-hidden="true">
+                      <label>Не заполняйте это поле
+                        <input type="text" tabIndex={-1} autoComplete="off" value={formHp} onChange={e => setFormHp(e.target.value)} />
+                      </label>
                     </div>
                     {formError && (
                       <div style={{ color: "#e53e3e", fontSize: 14, marginBottom: 12, fontWeight: 600 }}>{formError}</div>
