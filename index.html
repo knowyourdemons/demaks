@@ -589,8 +589,14 @@ function DemaksSite() {
   const [formError, setFormError] = useState("");
   const [formName, setFormName] = useState("");
   const [formPhone, setFormPhone] = useState("");
+  const [formEmail, setFormEmail] = useState("");
   const [formNeed, setFormNeed] = useState("Коробки для тортов");
+  const [formVolume, setFormVolume] = useState("Уточню в разговоре");
+  const [formComment, setFormComment] = useState("");
+  const [formConsent, setFormConsent] = useState(false);
   const [formHp, setFormHp] = useState("");
+  const utmRef = useRef({});
+  const referrerRef = useRef("");
   const [mobileMenu, setMobileMenu] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const [ffFilter, setFfFilter] = useState("all");
@@ -624,20 +630,71 @@ function DemaksSite() {
     };
   }, [lightbox]);
 
-  const handleSubmit = async () => {
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const needParam = (params.get("need") || "").toLowerCase();
+      const needFromParam = {
+        pizza:        "Коробки для пиццы",
+        cakes:        "Коробки для тортов",
+        macarons:     "Коробки для капкейков / макарон",
+        cosmetics:    "Коробки для косметики / мыла",
+        gifts:        "Подарочные боксы",
+        marketplaces: "Корпоративный заказ",
+        corporate:    "Корпоративный заказ",
+      }[needParam];
+      if (needFromParam) setFormNeed(needFromParam);
+      utmRef.current = {
+        source:   params.get("utm_source")   || "",
+        medium:   params.get("utm_medium")   || "",
+        campaign: params.get("utm_campaign") || "",
+        content:  params.get("utm_content")  || "",
+        term:     params.get("utm_term")     || "",
+      };
+      referrerRef.current = document.referrer || "";
+    } catch (e) {}
+  }, []);
+
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
     setFormError("");
     if (!formName.trim()) { setFormError("Укажите ваше имя"); return; }
-    if (!formPhone.trim()) { setFormError("Укажите телефон"); return; }
+    if (!formPhone.trim()) { setFormError("Укажите телефон или Telegram"); return; }
+    const phoneDigits = formPhone.replace(/\D/g, "");
+    const looksLikeTg = /^@?[a-z0-9_]{4,32}$/i.test(formPhone.trim());
+    if (phoneDigits.length < 7 && !looksLikeTg) {
+      setFormError("Похоже, телефон указан неверно. Пример: +375 29 157 15 17");
+      return;
+    }
+    if (formEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formEmail.trim())) {
+      setFormError("Email указан некорректно");
+      return;
+    }
+    if (!formConsent) {
+      setFormError("Подтвердите согласие на обработку персональных данных");
+      return;
+    }
     setFormSending(true);
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: formName, phone: formPhone, need: formNeed, hp: formHp }),
+        body: JSON.stringify({
+          name: formName,
+          phone: formPhone,
+          email: formEmail,
+          need: formNeed,
+          volume: formVolume,
+          comment: formComment,
+          source: window.location.href,
+          referrer: referrerRef.current,
+          utm: utmRef.current,
+          hp: formHp,
+        }),
       });
       if (!res.ok) throw new Error("Ошибка отправки");
       setFormSent(true);
-    } catch (e) {
+    } catch (err) {
       setFormError("Не удалось отправить заявку. Попробуйте ещё раз или напишите в Telegram.");
     } finally {
       setFormSending(false);
@@ -1673,18 +1730,21 @@ function DemaksSite() {
                 border: `1px solid ${T.border}`,
               }}>
                 {!formSent ? (
-                  <>
+                  <form onSubmit={handleSubmit} noValidate>
                     <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 24 }}>Форма заявки</h3>
                     {[
-                      { label: "Ваше имя", placeholder: "Анна", type: "text", value: formName, onChange: e => setFormName(e.target.value) },
-                      { label: "Телефон или Telegram", placeholder: "+375 29 157 15 17", type: "tel", value: formPhone, onChange: e => setFormPhone(e.target.value) },
+                      { label: "Ваше имя", placeholder: "Анна", type: "text", autoComplete: "name", required: true, value: formName, onChange: e => setFormName(e.target.value) },
+                      { label: "Телефон или Telegram", placeholder: "+375 29 157 15 17", type: "tel", autoComplete: "tel", required: true, value: formPhone, onChange: e => setFormPhone(e.target.value) },
+                      { label: "Email (если нужен счёт или КП)", placeholder: "you@company.by", type: "email", autoComplete: "email", required: false, value: formEmail, onChange: e => setFormEmail(e.target.value) },
                     ].map((f, i) => (
                       <div key={i} style={{ marginBottom: 16 }}>
                         <label style={{
                           display: "block", fontSize: 13, fontWeight: 600,
                           marginBottom: 6, color: T.text,
-                        }}>{f.label}</label>
-                        <input placeholder={f.placeholder} type={f.type} value={f.value} onChange={f.onChange} style={{
+                        }}>
+                          {f.label}{f.required && <span style={{ color: "#e53e3e", marginLeft: 4 }}>*</span>}
+                        </label>
+                        <input placeholder={f.placeholder} type={f.type} autoComplete={f.autoComplete} value={f.value} onChange={f.onChange} style={{
                           width: "100%", padding: "12px 16px", borderRadius: T.radiusSm,
                           border: `1px solid ${T.border}`, fontSize: 15,
                           fontFamily: "inherit", outline: "none",
@@ -1694,7 +1754,7 @@ function DemaksSite() {
                         onBlur={e => e.target.style.borderColor = T.border} />
                       </div>
                     ))}
-                    <div style={{ marginBottom: 20 }}>
+                    <div style={{ marginBottom: 16 }}>
                       <label style={{
                         display: "block", fontSize: 13, fontWeight: 600,
                         marginBottom: 6, color: T.text,
@@ -1712,10 +1772,42 @@ function DemaksSite() {
                         <option>Корпоративный заказ</option>
                         <option>Другое</option>
                       </select>
-                      <div style={{
-                        fontSize: 12, color: T.textMuted, marginTop: 8, lineHeight: 1.5,
+                    </div>
+                    <div style={{ marginBottom: 16 }}>
+                      <label style={{
+                        display: "block", fontSize: 13, fontWeight: 600,
+                        marginBottom: 6, color: T.text,
+                      }}>Примерный тираж</label>
+                      <select value={formVolume} onChange={e => setFormVolume(e.target.value)} style={{
+                        width: "100%", padding: "12px 16px", borderRadius: T.radiusSm,
+                        border: `1px solid ${T.border}`, fontSize: 15,
+                        fontFamily: "inherit", background: "white", outline: "none",
                       }}>
-                        Размер, тираж и нужна ли печать — уточним после отправки заявки.
+                        <option>До 100 шт</option>
+                        <option>100–500 шт</option>
+                        <option>500–2000 шт</option>
+                        <option>2000–10 000 шт</option>
+                        <option>Более 10 000 шт</option>
+                        <option>Уточню в разговоре</option>
+                      </select>
+                    </div>
+                    <div style={{ marginBottom: 20 }}>
+                      <label style={{
+                        display: "block", fontSize: 13, fontWeight: 600,
+                        marginBottom: 6, color: T.text,
+                      }}>Размер, печать, особенности</label>
+                      <textarea value={formComment} onChange={e => setFormComment(e.target.value)}
+                        placeholder="Например: 240×240×40 мм, печать 1+0 коричневым, нужен макет"
+                        rows={4} style={{
+                        width: "100%", padding: "12px 16px", borderRadius: T.radiusSm,
+                        border: `1px solid ${T.border}`, fontSize: 15,
+                        fontFamily: "inherit", outline: "none", resize: "vertical",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={e => e.target.style.borderColor = T.blue}
+                      onBlur={e => e.target.style.borderColor = T.border} />
+                      <div style={{ fontSize: 12, color: T.textMuted, marginTop: 6, lineHeight: 1.5 }}>
+                        Заполнять необязательно — если не знаете точных параметров, уточним в разговоре.
                       </div>
                     </div>
                     <div style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }} aria-hidden="true">
@@ -1723,10 +1815,24 @@ function DemaksSite() {
                         <input type="text" tabIndex={-1} autoComplete="off" value={formHp} onChange={e => setFormHp(e.target.value)} />
                       </label>
                     </div>
+                    <label style={{
+                      display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 16,
+                      fontSize: 13, color: T.textSoft, lineHeight: 1.5, cursor: "pointer",
+                    }}>
+                      <input type="checkbox" checked={formConsent} onChange={e => setFormConsent(e.target.checked)} style={{
+                        marginTop: 3, width: 16, height: 16, flexShrink: 0, accentColor: T.blue, cursor: "pointer",
+                      }} />
+                      <span>
+                        Я согласен(а) на обработку моих персональных данных в соответствии с{" "}
+                        <a href="/policy.html" target="_blank" rel="noopener" style={{ color: T.blue, fontWeight: 600 }}>
+                          Политикой обработки персональных данных
+                        </a>.
+                      </span>
+                    </label>
                     {formError && (
                       <div style={{ color: "#e53e3e", fontSize: 14, marginBottom: 12, fontWeight: 600 }}>{formError}</div>
                     )}
-                    <button onClick={handleSubmit} disabled={formSending} style={{
+                    <button type="submit" disabled={formSending} style={{
                       width: "100%", padding: "14px", borderRadius: T.radiusSm,
                       background: formSending ? T.textSoft : T.blue, color: "white", fontSize: 16, fontWeight: 700,
                       border: "none", cursor: formSending ? "not-allowed" : "pointer", fontFamily: "inherit",
@@ -1736,12 +1842,19 @@ function DemaksSite() {
                     onMouseLeave={e => { if (!formSending) e.target.style.background = T.blue }}>
                       {formSending ? "Отправка..." : "Отправить заявку"}
                     </button>
-                  </>
+                  </form>
                 ) : (
-                  <div style={{ textAlign: "center", padding: "40px 0" }}>
+                  <div style={{ textAlign: "center", padding: "32px 0" }}>
                     <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
                     <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>Заявка отправлена!</h3>
-                    <p style={{ fontSize: 14, color: T.textSoft }}>Мы свяжемся с вами в течение 2 часов</p>
+                    <p style={{ fontSize: 14, color: T.textSoft, marginBottom: 20 }}>Свяжемся в течение 2 часов в рабочее время. По срочным вопросам — пишите в Telegram:</p>
+                    <a href="https://t.me/demaks_orders_bot" target="_blank" rel="noopener" style={{
+                      display: "inline-flex", alignItems: "center", gap: 10,
+                      background: "#26A5E4", color: "white", padding: "12px 22px",
+                      borderRadius: T.radiusSm, fontSize: 14, fontWeight: 700, textDecoration: "none",
+                    }}>
+                      ✈️ Написать в Telegram
+                    </a>
                   </div>
                 )}
               </div>
@@ -2009,6 +2122,7 @@ function DemaksSite() {
             <a href="/cosmetics.html" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>Косметике</a>
             <a href="/gifts.html" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>Подарки</a>
             <a href="/blog/" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>Блог</a>
+            <a href="/policy.html" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>Политика обработки данных</a>
           </div>
           <div style={{ fontSize: 13, textAlign: "right", width: "100%", marginTop: 12, color: "rgba(255,255,255,0.5)" }}>
             © 2026 ОДО «Демакс-групп». Производство упаковки в Могилёве с 2007 года. УНП 790380841
